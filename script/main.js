@@ -19,6 +19,11 @@ function changeElements() {
     newSubImage.classList.add('thumb');
 
     newSubImage.src = "images/" + objectIndex.images[index];
+
+    newSubImage.dataset.index = index;
+
+    newSubImage.addEventListener('click', function() {popLightbox(index, objectIndex); }, false);
+
     subImages.appendChild(newSubImage);
 
 });
@@ -40,6 +45,33 @@ function changeElements() {
   image.addEventListener('click', changeElements, false);
 });
 
+function popLightbox(currentIndex, currentObject) {
+  // debugger;
+  // move the overlay to the top - quick bug fix
+  window.scrollTo(0, 0);
+  document.body.style.overflow = "hidden";
+
+  let lightbox = document.querySelector('.lightbox');
+  let lightboxImg = lightbox.querySelector('img');
+  let lightboxDesc = lightbox.querySelector('p');
+  let lightboxClose = document.querySelector('.close_lightbox');
+
+
+
+  lightbox.style.display = 'block';
+  lightboxImg.src = "images/" + currentObject.images[currentIndex];
+  lightboxDesc.innerHTML = currentObject.imageDescription[currentIndex];
+
+  lightboxClose.addEventListener('click', closelightbox, false);
+}
+
+function closelightbox(){
+  // debugger;
+  let lightbox = document.querySelector('.lightbox');
+  lightbox.style.display = 'none';
+  document.body.style.overflow = "scroll"
+}
+
 // document.querySelector('#spring').click();
   changeElements.call(document.querySelector('#spring'));
-})()
+})();
